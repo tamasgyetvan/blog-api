@@ -4,11 +4,13 @@ const { DateTime } = require("luxon");
 
 const PostSchema = new Schema({
     title: {
+        type: String,
         required: true,
         maxLength: 50,
     },
 
     text: {
+        type: String,
         required: true,
     },
     
@@ -27,3 +29,5 @@ const PostSchema = new Schema({
 PostSchema.virtual("timestamp_formatted").get(function() {
     return DateTime.fromJSDate(this.timestamp).toLocaleString(DateTime.DATETIME_MED);
 })
+
+module.exports = mongoose.model("Post", PostSchema);
