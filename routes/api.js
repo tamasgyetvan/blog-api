@@ -3,6 +3,7 @@ const router = express.Router();
 const Post = require("../models/post")
 const User = require("../models/user")
 const signupController = require("../controllers/signup")
+const loginController = require("../controllers/login")
 
 //ADMIN ROUTES
 //Index page with login and register
@@ -12,7 +13,7 @@ router.get("/api/admin/", (req, res) => {
 
 
 //Authorization routes
-router.post("/api/login", (req, res) => {res.json("ASD")})
+router.post("/api/login", loginController.login_post)
 
 router.post("/api/logout")
 

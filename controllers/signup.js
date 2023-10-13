@@ -28,10 +28,10 @@ exports.signup_post =[
             const errors = validationResult(req)
             const userExists = await User.findOne({username: req.body.username})
 
-            if (userExists) {
-                res.status(400).json("User already exists.")
-            } else if (!errors)  {
+            if (!errors.isEmpty()) {
                 res.status(400).json(errors)
+            } else if (userExists)  {
+                res.status(400).json("User already exists.")
             } else {                
                 const user = new User({
                     username: req.body.username,
