@@ -2,8 +2,6 @@ const User = require("../models/user")
 const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler")
 const bcrypt = require("bcryptjs")
-const passport = require('passport');
-const user = require("../models/user");
 
 exports.signup_post =[
     body("username")
@@ -36,7 +34,7 @@ exports.signup_post =[
                 const user = new User({
                     username: req.body.username,
                     password: hashedPassword
-                })    
+                })
                 await user.save()
                 res.status(200).json("User saved successfully")
             }
