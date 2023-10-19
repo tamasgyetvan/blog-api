@@ -19,7 +19,6 @@ exports.signup_post =[
         .trim()
         .escape(),
 
-
     asyncHandler(async(req, res, next) => {
 
         bcrypt.hash(req.body.password, 10, async(err, hashedPassword) => {
@@ -37,10 +36,8 @@ exports.signup_post =[
                 })
                 await user.save()
                 res.status(200).json("User saved successfully")
-            }
-
-            
+            }            
         })
     })
         
-    ]
+]
