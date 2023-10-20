@@ -34,7 +34,7 @@ router.get("/api/queryposts", verifyToken, blogController.queryPosts)
 router.post("/api/create_post", verifyToken, blogController.createPost)
 
 router.put("/api/update_post", verifyToken, blogController.updatePost)
-router.delete("/api/delete_post", verifyToken, blogController.deletePost)
+router.delete("/api/delete_post/:id", verifyToken, blogController.deletePost)
 module.exports = router;
 
 

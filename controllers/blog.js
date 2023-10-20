@@ -1,10 +1,9 @@
 const { validationResult, body } = require("express-validator")
 const Post = require("../models/post")
 const asyncHandler = require("express-async-handler")
-const  jwt  = require("jsonwebtoken")
 
 exports.queryPosts = async(req, res, next) => {
-        const posts = await Post.find({}).exec()
+        const posts = await Post.find({}).populate("author", "username").exec()
         res.json(posts)
 }
 
@@ -40,7 +39,13 @@ exports.createPost =  [
 ] 
 
 exports.deletePost = async(req, res, next) => {
-    res.json("Blog delete post request")
+    const itemToDelete = await Post.findById(req.params.id).exec()
+    if (!itemToDelete) {
+        res.json({errorMessage: "Error deleting item"})
+    } else {
+        await Post.findByIdAndDelete(req.params.id).exec()
+        res.json({successMessage: "Post successfully deleted"})
+    }
 }
 
 exports.updatePost = async(req, res, next) => {
