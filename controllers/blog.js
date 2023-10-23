@@ -33,7 +33,7 @@ exports.createPost =  [
                 author: req.body.user
             })
             await newPost.save()
-            res.json({successMessage: "Post created"})
+            res.json({successMessage: "Post created", newPost: newPost})
         }        
     })
 ] 
