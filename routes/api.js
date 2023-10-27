@@ -15,7 +15,7 @@ function verifyToken(req, res, next) {
     jwt.verify(bearerToken, process.env.SECRET, (err, authData) => {
 
         if (err) {
-            res.sendStatus(500).json({error: err,
+            res.json({error: err,
                 errorMessage: "An error occured when trying to send your request!"})
         } else {
             next()
@@ -33,7 +33,7 @@ router.post("/api/signup", signupController.signup_post)
 router.get("/api/queryposts", verifyToken, blogController.queryPosts)
 router.post("/api/create_post", verifyToken, blogController.createPost)
 
-router.put("/api/update_post", verifyToken, blogController.updatePost)
+router.put("/api/post/:id", verifyToken, blogController.updatePost)
 router.delete("/api/delete_post/:id", verifyToken, blogController.deletePost)
 module.exports = router;
 

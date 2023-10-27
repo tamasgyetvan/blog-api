@@ -48,6 +48,33 @@ exports.deletePost = async(req, res, next) => {
     }
 }
 
-exports.updatePost = async(req, res, next) => {
-    res.json("Blog update post request")
-}
+exports.updatePost = [
+    body("username")
+        .isLength({max: 50})
+        .trim()
+        .escape(),
+    body("text")
+        .isLength({max: 50})
+        .trim()
+        .escape(),
+    body("user")
+        .trim()
+        .escape(),
+
+    asyncHandler(async(req, res, next) => {
+        const errors = validationResult(req)
+
+        if (!errors.isEmpty()) {
+            res.json({errorMessage: "Error when creating Post"})
+            
+        } else {
+            const postDetails = {
+                title: req.body.title,
+                text: req.body.content,
+                author: req.body.author
+            }
+            await Post.findByIdAndUpdate(req.params.id, postDetails)            
+            res.json({successMessage: "Post updated"})
+        }        
+    })
+] 
