@@ -17,23 +17,26 @@ const bcrypt = require("bcryptjs")
         try {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
-                res.status(400).json({
+                res.json({
                         token: null,
                         errorMessage: "Server error"})
+                return;
             }
 
             const user = await User.findOne({username: req.body.username})
             
             if (user && (await bcrypt.compare(req.body.password, user.password)) ) {
             const token = jwt.sign({id: user._id}, process.env.SECRET, {expiresIn: "15m"})                       
-            res.status(200).json({
+            res.json({
                 user: user._id,
-                token,
+                token: token,
                 errorMessage: null
             })} else if (!user) {
-                res.status(400).json({
+                res.json({
                 token: null,
                 errorMessage: "User not found"})
+                } else {
+                    res.json({token: null, errorMessage: "Incorrect password"})
                 }} catch(error) {
                      res.json(error)
                 }
