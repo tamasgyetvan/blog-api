@@ -34,9 +34,9 @@ const bcrypt = require("bcryptjs")
             })} else if (!user) {
                 res.json({
                 token: null,
-                errorMessage: "User not found"})
+                errorMessage: "Username not found!"})
                 } else {
-                    res.json({token: null, errorMessage: "Incorrect password"})
+                    res.json({token: null, errorMessage: "Incorrect password!"})
                 }} catch(error) {
                      res.json(error)
                 }

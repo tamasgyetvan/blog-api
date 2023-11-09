@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs")
 
 exports.signup_post =[
     body("username")
-        .isLength({min: 4}).withMessage("Username should contain at least 4 characters.")
+        .isLength({min: 5}).withMessage("Username should contain at least 5 characters.")
         .trim()
         .escape(),
     body("password", "Password is required!")
@@ -26,16 +26,16 @@ exports.signup_post =[
             const userExists = await User.findOne({username: req.body.username})
 
             if (!errors.isEmpty()) {
-                res.status(400).json(errors)
+                res.json({errorMessage: "Server error!" })
             } else if (userExists)  {
-                res.status(400).json("User already exists.")
+                res.json({errorMessage: "Username already exists! Please choose another one."})
             } else {                
                 const user = new User({
                     username: req.body.username,
                     password: hashedPassword
                 })
                 await user.save()
-                res.status(200).json("User saved successfully")
+                res.json({successMessage: "Registration was successful! Please log in."})
             }            
         })
     })
