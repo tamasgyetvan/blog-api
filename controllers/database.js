@@ -13,7 +13,6 @@ exports.createPost =  [
         .trim()
         .escape(),
     body("text")
-        .isLength({max: 50})
         .trim()
         .escape(),
     body("user")
@@ -26,26 +25,26 @@ exports.createPost =  [
         if (!errors.isEmpty()) {
             res.json({errorMessage: "Error when creating Post"})
             
-        } else {
-            const newPost = new Post({
-                title: req.body.title,
-                text: req.body.content,
-                author: req.body.user
-            })
-            await newPost.save()
-            res.json({successMessage: "Post created", newPost: newPost})
-        }        
+        } 
+        const newPost = new Post({
+            title: req.body.title,
+            text: req.body.content,
+            author: req.body.user
+        })
+        await newPost.save()
+        res.json({successMessage: "Post created", newPost: newPost})
+             
     })
 ] 
 
 exports.deletePost = async(req, res, next) => {
     const itemToDelete = await Post.findById(req.params.id).exec()
     if (!itemToDelete) {
-        res.json({errorMessage: "Error deleting item"})
-    } else {
-        await Post.findByIdAndDelete(req.params.id).exec()
-        res.json({successMessage: "Post successfully deleted"})
-    }
+        res.json({errorMessage: "Error deleting item"})        
+    } 
+    await Post.findByIdAndDelete(req.params.id).exec()
+    res.json({successMessage: "Post successfully deleted"})
+    
 }
 
 exports.updatePost = [
@@ -54,7 +53,6 @@ exports.updatePost = [
         .trim()
         .escape(),
     body("text")
-        .isLength({max: 50})
         .trim()
         .escape(),
     body("user")
@@ -67,14 +65,14 @@ exports.updatePost = [
         if (!errors.isEmpty()) {
             res.json({errorMessage: "Error when creating Post"})
             
-        } else {
-            const postDetails = {
-                title: req.body.title,
-                text: req.body.content,
-                author: req.body.author
-            }
-            await Post.findByIdAndUpdate(req.params.id, postDetails)            
-            res.json({successMessage: "Post updated"})
-        }        
+        }
+        const postDetails = {
+            title: req.body.title,
+            text: req.body.content,
+            author: req.body.author
+        }
+        await Post.findByIdAndUpdate(req.params.id, postDetails)            
+        res.json({successMessage: "Post updated"})
+              
     })
 ] 

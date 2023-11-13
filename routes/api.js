@@ -1,10 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const Post = require("../models/post")
-const User = require("../models/user")
 const signupController = require("../controllers/signup")
 const loginController = require("../controllers/login")
-const blogController = require("../controllers/blog")
+const databaseController = require("../controllers/database")
 const jwt = require("jsonwebtoken")
 
 
@@ -30,11 +28,11 @@ router.post("/api/signup", signupController.signup_post)
 
 
 //Post action routes
-router.get("/api/queryposts", verifyToken, blogController.queryPosts)
-router.post("/api/create_post", verifyToken, blogController.createPost)
+router.get("/api/queryposts", verifyToken, databaseController.queryPosts)
+router.post("/api/create_post", verifyToken, databaseController.createPost)
 
-router.put("/api/post/:id", verifyToken, blogController.updatePost)
-router.delete("/api/delete_post/:id", verifyToken, blogController.deletePost)
+router.put("/api/post/:id", verifyToken, databaseController.updatePost)
+router.delete("/api/delete_post/:id", verifyToken, databaseController.deletePost)
 module.exports = router;
 
 
