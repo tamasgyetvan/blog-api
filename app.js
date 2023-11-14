@@ -9,6 +9,7 @@ const mongoose = require("mongoose")
 const cors = require("cors")
 const bodyParser = require("body-parser")
 const app = express();
+const helmet = require("helmet")
 
 //MongoDB connection
 const mongoDB = process.env.MONGOURL
@@ -30,6 +31,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors())
+app.use(helmet())
 
 //Routes
 const apiRouter = require("./routes/api")
