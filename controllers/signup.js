@@ -5,7 +5,8 @@ const bcrypt = require("bcryptjs")
 
 exports.signup_post =[
     body("username")
-        .isLength({min: 5}).withMessage("Username should contain at least 5 characters.")
+        .isLength({min: 5})
+        .withMessage("Username should contain at least 5 characters!")
         .trim()
         .escape(),
     body("password", "Password is required!")
